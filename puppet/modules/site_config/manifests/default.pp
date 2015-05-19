@@ -14,7 +14,7 @@ class site_config::default {
   include apt::update
   Package { require => Exec['apt_updated'] }
 
-  class {'augeas':
+  class { '::augeas':
     version => 'latest'
   }
 
