@@ -26,6 +26,10 @@ class site_config::setup {
     require => Exec['refresh_apt']
   }
 
+  class { '::augeas':
+    version => 'latest'
+  }
+
   # if squid_deb_proxy_client is set to true, install and configure
   # squid_deb_proxy_client for apt caching
   if hiera('squid_deb_proxy_client', false) {

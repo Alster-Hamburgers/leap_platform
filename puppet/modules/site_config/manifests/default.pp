@@ -14,10 +14,6 @@ class site_config::default {
   include apt::update
   Package { require => Exec['apt_updated'] }
 
-  class { '::augeas':
-    version => 'latest'
-  }
-
   include site_config::slow
 
   # default class, used by all hosts
