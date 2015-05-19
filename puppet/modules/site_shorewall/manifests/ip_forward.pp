@@ -1,5 +1,5 @@
 class site_shorewall::ip_forward {
-  include augeas
+  require augeas
   augeas { 'enable_ip_forwarding':
     changes => 'set /files/etc/shorewall/shorewall.conf/IP_FORWARDING Yes',
     lens    => 'Shellvars.lns',
