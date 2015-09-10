@@ -4,8 +4,6 @@
 
 class site_postfix::mx::static_aliases {
 
-  require site_postfix::mx
-
   $mx = hiera('mx')
   $aliases = $mx['aliases']
 
@@ -55,6 +53,7 @@ class site_postfix::mx::static_aliases {
     owner   => root,
     group   => root,
     mode    => '0600',
-    notify  => Exec['newaliases']
+    notify  => Exec['newaliases'],
+    require => Package['postfix']
   }
 }
