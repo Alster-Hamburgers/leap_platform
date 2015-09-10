@@ -1,12 +1,14 @@
 class site_postfix::mx::smtpd_checks {
 
+  require site_postfix::mx
+
   postfix::config {
     'smtpd_helo_required':
       value => 'yes';
     'checks_dir':
       value => '$config_directory/checks';
     'smtpd_client_restrictions':
-      value => 'permit_mynetworks,permit';
+      value => "${site_postfix::mx::rbls}permit_mynetworks,permit";
     'smtpd_data_restrictions':
       value => 'permit_mynetworks, reject_unauth_pipelining, permit';
     'smtpd_delay_reject':

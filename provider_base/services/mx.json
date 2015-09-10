@@ -1,4 +1,11 @@
 {
+  "mx": {
+    // provider should define their own custom aliases.
+    // these are in *addition* to the standard reserved aliases for root and postmaster, etc.
+    "aliases": {},
+    // this is the domain that is used for the OpenPGP header
+    "key_lookup_domain": "= global.services[:webapp].webapp.domain"
+  },
   "stunnel": {
     "clients": {
       "couch_client": "= stunnel_client(nodes_like_me[:services => :couchdb], global.services[:couchdb].couch.port)"
@@ -16,6 +23,7 @@
     "salt": "= hex_secret :couch_leap_mx_password_salt, 128"
   },
   "mynetworks": "= nodes['environment' => '!local'].map{|name, n| [n.ip_address, (global.facts[name]||{})['ec2_public_ipv4']]}.flatten.compact.uniq",
+  "rbls": ["zen.spamhaus.org"],
   "x509": {
     "use": true,
     "use_commercial": true,

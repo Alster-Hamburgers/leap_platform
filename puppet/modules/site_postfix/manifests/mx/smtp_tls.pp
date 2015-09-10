@@ -6,6 +6,7 @@ class site_postfix::mx::smtp_tls {
   $cert_path = "${x509::variables::certs}/${site_config::params::cert_name}.crt"
   $key_path  = "${x509::variables::keys}/${site_config::params::cert_name}.key"
 
+  require site_postfix::mx
   # smtp TLS
   postfix::config {
     'smtp_use_tls':        value  => 'yes';
