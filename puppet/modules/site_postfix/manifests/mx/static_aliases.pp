@@ -43,16 +43,16 @@ class site_postfix::mx::static_aliases {
   # "/etc/aliases.db".
   postfix::config {
     'alias_database':
-      value => "/etc/aliases, /etc/postfix/custom-aliases";
+      value => '/etc/aliases, /etc/postfix/custom-aliases';
     'alias_maps':
-      value => "hash:/etc/aliases, hash:/etc/postfix/custom-aliases";
+      value => 'hash:/etc/aliases, hash:/etc/postfix/custom-aliases';
   }
 
   file { '/etc/postfix/custom-aliases':
     content => template('site_postfix/custom-aliases.erb'),
     owner   => root,
     group   => root,
-    mode    => 0600,
+    mode    => '0600',
     notify  => Exec['newaliases']
   }
 }
