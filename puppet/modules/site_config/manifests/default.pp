@@ -1,4 +1,3 @@
-# This class is the basic configuration for all nodes
 class site_config::default {
   tag 'leap_base'
 

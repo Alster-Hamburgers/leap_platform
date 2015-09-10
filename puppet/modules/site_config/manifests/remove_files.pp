@@ -27,6 +27,10 @@ class site_config::remove_files {
       path => '/var/log/',
       recurse => true,
       matches => 'leap_mx*';
+    'leap_mx_rotate':
+      path => '/var/log/leap/',
+      recurse => true,
+      matches => [ 'mx.log.[0-9]', 'mx.log.[0-9]?', 'mx.log.[6-9]?gz'];
     '/srv/leap/webapp/public/provider.json':;
     '/srv/leap/couchdb/designs/tmp_users':
       recurse => true,
@@ -34,10 +38,13 @@ class site_config::remove_files {
   }
 
   # leax-mx logged to /var/log/leap_mx.log in the past
-  augeas { 'rm_old_leap_mx_log_destination':
-    incl    => '/etc/check_mk/logwatch.state',
-    lens    => 'Simplelines.lns',
-    changes => [  "rm /files/etc/check_mk/logwatch.state/*[.=~regexp('.*leap_mx.log.*')]" ],
+  # we need to use a dumb exec here because file_line doesn't
+  # allow removing lines that match a regex in the current version
+  # of stdlib, see https://tickets.puppetlabs.com/browse/MODULES-1903
+  exec { 'rm_old_leap_mx_log_destination':
+      command => "/bin/sed -i '/leap_mx.log/d' /etc/check_mk/logwatch.state",
+      onlyif  => "/bin/grep -qe 'leap_mx.log' /etc/check_mk/logwatch.state"
   }
+
 
 }
