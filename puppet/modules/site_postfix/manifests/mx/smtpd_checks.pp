@@ -1,5 +1,7 @@
 class site_postfix::mx::smtpd_checks {
 
+  require postfix
+
   postfix::config {
     'smtpd_helo_required':
       value => 'yes';

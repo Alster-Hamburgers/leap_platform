@@ -6,6 +6,8 @@ class site_postfix::mx::smtpd_tls {
   $key_path  = "${x509::variables::keys}/${site_config::params::cert_name}.key"
 
 
+  require postfix
+
   postfix::config {
     'smtpd_use_tls':        value  => 'yes';
     'smtpd_tls_CAfile':     value  => $ca_path;

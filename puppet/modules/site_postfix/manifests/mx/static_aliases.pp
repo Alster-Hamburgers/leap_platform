@@ -4,6 +4,8 @@
 
 class site_postfix::mx::static_aliases {
 
+  require postfix
+
   $mx = hiera('mx')
   $aliases = $mx['aliases']
 
